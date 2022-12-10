@@ -22,7 +22,6 @@ type CreateProductModel struct {
 }
 
 type UpdateProductModel struct {
-	Id string `json:"id" binding:"required"`   
 	Title string `json:"title"`
 	Description string `json:"description"`
 	Quantity int `json:"quantity"`

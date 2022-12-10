@@ -9,7 +9,7 @@ import (
 
 func main() {
 	cfg := config.Load()
-	log := logger.New(cfg.LogLevel, "ecommer_api_gateway")
+	log := logger.New(cfg.LogLevel, "ecommerce_api_gateway")
 
 	grpcClients, _ := clients.NewGrpcClients(&cfg)
 
