@@ -12,7 +12,10 @@ type Category struct {
 type CreateCategoryModel struct {
 	Title string `json:"title"`
 }
-
+type GetAllCategoryModel struct {
+	Categories []Category `json:"products"`
+	Count     int32           `json:"count"`
+}
 type UpdateCategoryModel struct {
 	Title string `json:"title" binding:"required"`
 }

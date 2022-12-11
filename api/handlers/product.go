@@ -61,12 +61,14 @@ func (h *handler) CreateProduct(c *gin.Context) {
 // @Param limit query string false "limit"
 // @Param search query string false "search"
 // @Param category_id query string false "category_id"
+// @Param   enumstring  query     string     true  "string enums"       Enums(Price Low to High,Price High to Low)
 // @Success 200 {object} models.ResponseModel{data=models.GetAllProductModel} "desc"
 // @Response 400 {object} models.ResponseModel{error=string} "Bad Request"
 // @Failure 500 {object} models.ResponseModel{error=string} "Server Error"
 // @Router /product [GET]
 func (h *handler) GetAllProduct(c *gin.Context) {
 	// var products models.GetAllProductModel
+
 	offset, err := h.ParseQueryParam(c, "offset", h.cfg.DefaultOffset)
 	if err != nil {
 		return
@@ -84,9 +86,9 @@ func (h *handler) GetAllProduct(c *gin.Context) {
 			Limit:      int32(limit),
 			Search:     c.Query("search"),
 			CategoryId: c.Query("category_id"),
+			OrderBy: c.Query("enumstring"),
 		},
 	)
-
 	if !handleError(h.log, c, err, "error while getting all products") {
 		return
 	}
@@ -170,11 +172,11 @@ func (h *handler) UpdateProduct(c *gin.Context) {
 	res, err := h.services.ProductService().UpdateProduct(
 		context.Background(),
 		&product_service.UpdateProductRequest{
-			Id:   product_id,
-			Title: product.Title,
-			Desc: product.Description,
+			Id:       product_id,
+			Title:    product.Title,
+			Desc:     product.Description,
 			Quantity: int32(product.Quantity),
-			Price: int32(product.Price),
+			Price:    int32(product.Price),
 		},
 	)
 
@@ -189,7 +191,6 @@ func (h *handler) UpdateProduct(c *gin.Context) {
 
 	h.handleSuccessResponse(c, http.StatusOK, "ok", res)
 }
-
 
 // Delete Product godoc
 // @ID delete_product
