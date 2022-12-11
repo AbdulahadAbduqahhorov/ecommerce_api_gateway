@@ -15,6 +15,23 @@ definitions:
       title:
         type: string
     type: object
+  models.CreateOrderModel:
+    properties:
+      customer_address:
+        type: string
+      customer_name:
+        type: string
+      customer_phone:
+        type: string
+      order_items:
+        items:
+          $ref: '#/definitions/models.OrderItem'
+        type: array
+    required:
+    - customer_address
+    - customer_name
+    - customer_phone
+    type: object
   models.CreateProductModel:
     properties:
       category_id:
@@ -43,6 +60,15 @@ definitions:
           $ref: '#/definitions/models.Category'
         type: array
     type: object
+  models.GetAllOrderModel:
+    properties:
+      count:
+        type: integer
+      products:
+        items:
+          $ref: '#/definitions/models.Order'
+        type: array
+    type: object
   models.GetAllProductModel:
     properties:
       count:
@@ -51,6 +77,34 @@ definitions:
         items:
           $ref: '#/definitions/models.Product'
         type: array
+    type: object
+  models.Order:
+    properties:
+      customer_address:
+        type: string
+      customer_name:
+        type: string
+      customer_phone:
+        type: string
+      id:
+        type: string
+      total_price:
+        type: integer
+    required:
+    - customer_address
+    - customer_name
+    - customer_phone
+    - total_price
+    type: object
+  models.OrderItem:
+    properties:
+      product_id:
+        type: string
+      quantity:
+        type: integer
+    required:
+    - product_id
+    - quantity
     type: object
   models.Product:
     properties:
@@ -343,6 +397,148 @@ paths:
       summary: Update Category
       tags:
       - category
+  /order:
+    get:
+      consumes:
+      - application/json
+      description: Get All Order
+      operationId: get all order
+      parameters:
+      - description: offset
+        in: query
+        name: offset
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        type: string
+      - description: search
+        in: query
+        name: search
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.ResponseModel'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.GetAllOrderModel'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.ResponseModel'
+            - properties:
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.ResponseModel'
+            - properties:
+                error:
+                  type: string
+              type: object
+      summary: Get All Order
+      tags:
+      - order
+    post:
+      consumes:
+      - application/json
+      description: Create Order
+      operationId: create_order
+      parameters:
+      - description: order
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateOrderModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.ResponseModel'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.ResponseModel'
+            - properties:
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.ResponseModel'
+            - properties:
+                error:
+                  type: string
+              type: object
+      summary: Create Order
+      tags:
+      - order
+  /order/{order_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get Order
+      operationId: get_order
+      parameters:
+      - description: order_id
+        in: path
+        name: order_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: desc
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.ResponseModel'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.GetAllOrderModel'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.ResponseModel'
+            - properties:
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/models.ResponseModel'
+            - properties:
+                error:
+                  type: string
+              type: object
+      summary: Get Order
+      tags:
+      - order
   /product:
     get:
       consumes:
