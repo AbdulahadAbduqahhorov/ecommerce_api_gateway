@@ -18,6 +18,7 @@ import (
 
 var (
 	ErrAlreadyExists       = "ALREADY_EXISTS"
+	ErrInvalidArgument     = "INVALID_ARGUMENT"
 	ErrNotFound            = "NOT_FOUND"
 	ErrInternalServerError = "INTERNAL_SERVER_ERROR"
 	ErrServiceUnavailable  = "SERVICE_UNAVAILABLE"
@@ -52,20 +53,31 @@ func handleError(log logger.Logger, c *gin.Context, err error, message string) (
 		log.Error(message+", canceled ", logger.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{
 			"success": false,
+			"message": err.Error(),
 			"error":   st.Message(),
 		})
 		return
-	} else if st.Code() == codes.AlreadyExists || st.Code() == codes.InvalidArgument {
+	} else if st.Code() == codes.AlreadyExists {
 		log.Error(message+", already exists", logger.Error(err))
 		c.JSON(http.StatusBadRequest, gin.H{
 			"success": false,
+			"message": err.Error(),
 			"error":   ErrAlreadyExists,
+		})
+		return
+	} else if st.Code() == codes.InvalidArgument {
+		log.Error(message+",invalid argument", logger.Error(err))
+		c.JSON(http.StatusBadRequest, gin.H{
+			"success": false,
+			"message": err.Error(),
+			"error":   ErrInvalidArgument,
 		})
 		return
 	} else if st.Code() == codes.NotFound {
 		log.Error(message+", not found", logger.Error(err))
 		c.JSON(http.StatusNotFound, gin.H{
 			"success": false,
+			"message": err.Error(),
 			"error":   ErrNotFound,
 		})
 		return
@@ -73,6 +85,7 @@ func handleError(log logger.Logger, c *gin.Context, err error, message string) (
 		log.Error(message+", service unavailable", logger.Error(err))
 		c.JSON(http.StatusServiceUnavailable, gin.H{
 			"success": false,
+			"message": err.Error(),
 			"error":   ErrServiceUnavailable,
 		})
 		return
@@ -80,6 +93,7 @@ func handleError(log logger.Logger, c *gin.Context, err error, message string) (
 		log.Error(message+", internal server error", logger.Error(err))
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"success": false,
+			"message": err.Error(),
 			"error":   ErrInternalServerError,
 		})
 		return

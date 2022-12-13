@@ -21,7 +21,7 @@ type RouterOptions struct {
 // @in                         header
 // @name                       Authorization
 func New(opt *RouterOptions) *gin.Engine {
-	
+
 	docs.SwaggerInfo.Title = "Ecommerce API"
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
@@ -63,10 +63,9 @@ func New(opt *RouterOptions) *gin.Engine {
 	router.GET("/user/:user_id", handler.GetUserById)
 	router.PUT("/user", handler.UpdateUser)
 	router.DELETE("/user/:user_id", handler.DeleteUser)
-	
+
 	router.POST("/register", handler.Register)
 	router.POST("/login", handler.Login)
-
 
 	url := ginSwagger.URL("swagger/doc.json") // The url pointing to API definition
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))

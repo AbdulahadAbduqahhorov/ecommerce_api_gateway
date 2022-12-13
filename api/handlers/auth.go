@@ -59,7 +59,7 @@ func (h *handler) CreateUser(c *gin.Context) {
 // @Failure     500      {object} models.ResponseModel{error=string}                          "Server Error"
 // @Router      /user [GET]
 func (h *handler) GetAllUser(c *gin.Context) {
-	
+
 	offset, err := h.ParseQueryParam(c, "offset", h.cfg.DefaultOffset)
 	if err != nil {
 		return
@@ -73,10 +73,10 @@ func (h *handler) GetAllUser(c *gin.Context) {
 	resp, err := h.services.AuthService().GetUserList(
 		context.Background(),
 		&auth_service.GetUserListRequest{
-			Offset:     int32(offset),
-			Limit:      int32(limit),
-			Search:     c.Query("search"),
-			Type: c.Query("userType"),
+			Offset: int32(offset),
+			Limit:  int32(limit),
+			Search: c.Query("search"),
+			Type:   c.Query("userType"),
 		},
 	)
 	if !handleError(h.log, c, err, "error while getting all users") {
@@ -99,7 +99,7 @@ func (h *handler) GetAllUser(c *gin.Context) {
 // @Failure     500     {object} models.ResponseModel{error=string}           "Server Error"
 func (h *handler) GetUserById(c *gin.Context) {
 	user_id := c.Param("user_id")
-	
+
 	if !util.IsValidUUID(user_id) {
 		h.handleErrorResponse(c, http.StatusBadRequest, "invalid user id", errors.New("user id is not valid"))
 		return
@@ -181,7 +181,7 @@ func (h *handler) DeleteUser(c *gin.Context) {
 		return
 	}
 
-	h.handleSuccessResponse(c, http.StatusOK, "ok",resp )
+	h.handleSuccessResponse(c, http.StatusOK, "ok", resp)
 }
 
 // Register User godoc
