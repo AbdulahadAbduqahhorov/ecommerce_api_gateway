@@ -9,6 +9,41 @@ import (
 	"github.com/AbdulahadAbduqahhorov/gRPC/Ecommerce/ecommerce_api_gateway/pkg/util"
 	"github.com/gin-gonic/gin"
 )
+// AuthMiddleware ...
+func (h handler) AuthMiddleware(userType map[string]bool) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		token := c.GetHeader("Authorization")
+		hasAccessResponse, err := h.services.AuthService().HasAccess(c.Request.Context(), &auth_service.TokenRequest{
+			Token: token,
+		})
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, map[string]interface{}{
+				"Error": err.Error(),
+			})
+			c.Abort()
+			return
+		}
+
+		if !hasAccessResponse.HasAccess {
+			c.JSON(http.StatusUnauthorized, "Unauthorized")
+			c.Abort()
+			return
+		}
+
+		if  _,ok:=userType["*"];!ok {
+			if _,ok:=userType[hasAccessResponse.UserType];!ok {
+				c.JSON(http.StatusUnauthorized, "Permission Denied")
+				c.Abort()
+			}
+		}
+
+		c.Set("auth_user_type", hasAccessResponse.UserType)
+		c.Set("auth_user_id", hasAccessResponse.UserId)
+
+		c.Next()
+	}
+}
+
 
 // Create User godoc
 // @ID          create_user
@@ -17,10 +52,11 @@ import (
 // @Tags        user
 // @Accept      json
 // @Produce     json
-// @Param       user body     auth_service.CreateUserRequest               true "user"
-// @Success     200  {object} models.ResponseModel{data=auth_service.User} "desc"
-// @Response    400  {object} models.ResponseModel{error=string}           "Bad Request"
-// @Failure     500  {object} models.ResponseModel{error=string}           "Server Error"
+// @Param       user          body     auth_service.CreateUserRequest               true  "user"
+// @Param       Authorization header   string                                       false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=auth_service.User} "desc"
+// @Response    400           {object} models.ResponseModel{error=string}           "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}           "Server Error"
 // @Router      /user [POST]
 func (h *handler) CreateUser(c *gin.Context) {
 	var user auth_service.CreateUserRequest
@@ -50,13 +86,14 @@ func (h *handler) CreateUser(c *gin.Context) {
 // @Tags        user
 // @Accept      json
 // @Produce     json
-// @Param       offset   query    string                                                      false "offset"
-// @Param       limit    query    string                                                      false "limit"
-// @Param       search   query    string                                                      false "search"
-// @Param       userType query    string                                                      false "sort by user type" Enums(ADMIN,USER)
-// @Success     200      {object} models.ResponseModel{data=auth_service.GetUserListResponse} "desc"
-// @Response    400      {object} models.ResponseModel{error=string}                          "Bad Request"
-// @Failure     500      {object} models.ResponseModel{error=string}                          "Server Error"
+// @Param       offset        query    string                                                      false "offset"
+// @Param       limit         query    string                                                      false "limit"
+// @Param       search        query    string                                                      false "search"
+// @Param       userType      query    string                                                      false "sort by user type" Enums(ADMIN,USER) 
+// @Param       Authorization header   string                                                      false "Authorization"     
+// @Success     200           {object} models.ResponseModel{data=auth_service.GetUserListResponse} "desc"
+// @Response    400           {object} models.ResponseModel{error=string}                          "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}                          "Server Error"
 // @Router      /user [GET]
 func (h *handler) GetAllUser(c *gin.Context) {
 
@@ -93,10 +130,11 @@ func (h *handler) GetAllUser(c *gin.Context) {
 // @Tags        user
 // @Accept      json
 // @Produce     json
-// @Param       user_id path     string                                       true "user_id"
-// @Success     200     {object} models.ResponseModel{data=auth_service.User} "desc"
-// @Response    400     {object} models.ResponseModel{error=string}           "Bad Request"
-// @Failure     500     {object} models.ResponseModel{error=string}           "Server Error"
+// @Param       user_id       path     string                                       true  "user_id"
+// @Param       Authorization header   string                                       false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=auth_service.User} "desc"
+// @Response    400           {object} models.ResponseModel{error=string}           "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}           "Server Error"
 func (h *handler) GetUserById(c *gin.Context) {
 	user_id := c.Param("user_id")
 
@@ -127,10 +165,11 @@ func (h *handler) GetUserById(c *gin.Context) {
 // @Tags        user
 // @Accept      json
 // @Produce     json
-// @Param       user body     auth_service.UpdateUserRequest               true "UpdateUserRequestBody"
-// @Success     200  {object} models.ResponseModel{data=auth_service.User} "User data"
-// @Response    400  {object} models.ResponseModel{error=string}           "Bad Request"
-// @Failure     500  {object} models.ResponseModel{error=string}           "Server Error"
+// @Param       user          body     auth_service.UpdateUserRequest               true  "UpdateUserRequestBody"
+// @Param       Authorization header   string                                       false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=auth_service.User} "User data"
+// @Response    400           {object} models.ResponseModel{error=string}           "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}           "Server Error"
 func (h *handler) UpdateUser(c *gin.Context) {
 	var user auth_service.UpdateUserRequest
 	err := c.BindJSON(&user)
@@ -158,7 +197,8 @@ func (h *handler) UpdateUser(c *gin.Context) {
 // @Tags        user
 // @Accept      json
 // @Produce     json
-// @Param       user_id path string true "user_id"
+// @Param       user_id       path   string true  "user_id"
+// @Param       Authorization header string false "Authorization"
 // @Success     204
 // @Response    400 {object} models.ResponseModel{error=string} "Bad Request"
 // @Failure     500 {object} models.ResponseModel{error=string} "Server Error"

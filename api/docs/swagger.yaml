@@ -263,6 +263,10 @@ paths:
         in: query
         name: search
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -308,6 +312,10 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.CreateCategoryModel'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -353,6 +361,10 @@ paths:
         name: category_id
         required: true
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -396,6 +408,10 @@ paths:
         in: path
         name: category_id
         required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
         type: string
       produces:
       - application/json
@@ -447,6 +463,10 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.UpdateCategoryModel'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -545,6 +565,10 @@ paths:
         in: query
         name: search
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -590,6 +614,10 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.CreateOrderModel'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -634,6 +662,10 @@ paths:
         in: path
         name: order_id
         required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
         type: string
       produces:
       - application/json
@@ -699,6 +731,10 @@ paths:
         name: enumstring
         required: true
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -744,6 +780,10 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.CreateProductModel'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -789,6 +829,10 @@ paths:
         name: product_id
         required: true
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -832,6 +876,10 @@ paths:
         in: path
         name: product_id
         required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
         type: string
       produces:
       - application/json
@@ -883,6 +931,10 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.UpdateProductModel'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -988,6 +1040,10 @@ paths:
         in: query
         name: userType
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -1033,6 +1089,10 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/auth_service.CreateUserRequest'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -1078,6 +1138,10 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/auth_service.UpdateUserRequest'
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -1123,6 +1187,10 @@ paths:
         name: user_id
         required: true
         type: string
+      - description: Authorization
+        in: header
+        name: Authorization
+        type: string
       produces:
       - application/json
       responses:
@@ -1159,6 +1227,10 @@ paths:
         in: path
         name: user_id
         required: true
+        type: string
+      - description: Authorization
+        in: header
+        name: Authorization
         type: string
       produces:
       - application/json

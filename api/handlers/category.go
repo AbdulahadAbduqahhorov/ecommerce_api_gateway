@@ -18,10 +18,11 @@ import (
 // @Tags        category
 // @Accept      json
 // @Produce     json
-// @Param       category body     models.CreateCategoryModel         true "category"
-// @Success     200      {object} models.ResponseModel{data=string}  "desc"
-// @Response    400      {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure     500      {object} models.ResponseModel{error=string} "Server Error"
+// @Param       category      body     models.CreateCategoryModel         true  "category"
+// @Param       Authorization header   string                             false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=string}  "desc"
+// @Response    400           {object} models.ResponseModel{error=string} "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string} "Server Error"
 // @Router      /category [POST]
 func (h *handler) CreateCategory(c *gin.Context) {
 	var category models.CreateCategoryModel
@@ -53,12 +54,13 @@ func (h *handler) CreateCategory(c *gin.Context) {
 // @Tags        category
 // @Accept      json
 // @Produce     json
-// @Param       offset query    string                                                false "offset"
-// @Param       limit  query    string                                                false "limit"
-// @Param       search query    string                                                false "search"
-// @Success     200    {object} models.ResponseModel{data=models.GetAllCategoryModel} "desc"
-// @Response    400    {object} models.ResponseModel{error=string}                    "Bad Request"
-// @Failure     500    {object} models.ResponseModel{error=string}                    "Server Error"
+// @Param       offset        query    string                                                false "offset"
+// @Param       limit         query    string                                                false "limit"
+// @Param       search        query    string                                                false "search"
+// @Param       Authorization header   string                                                false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=models.GetAllCategoryModel} "desc"
+// @Response    400           {object} models.ResponseModel{error=string}                    "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}                    "Server Error"
 // @Router      /category [GET]
 func (h *handler) GetAllCategory(c *gin.Context) {
 	// var categorys models.GetAllCategoryModel
@@ -101,10 +103,11 @@ func (h *handler) GetAllCategory(c *gin.Context) {
 // @Tags        category
 // @Accept      json
 // @Produce     json
-// @Param       category_id path     string                                                true "category_id"
-// @Success     200         {object} models.ResponseModel{data=models.GetAllCategoryModel} "desc"
-// @Response    400         {object} models.ResponseModel{error=string}                    "Bad Request"
-// @Failure     500         {object} models.ResponseModel{error=string}                    "Server Error"
+// @Param       category_id   path     string                                                true  "category_id"
+// @Param       Authorization header   string                                                false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=models.GetAllCategoryModel} "desc"
+// @Response    400           {object} models.ResponseModel{error=string}                    "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}                    "Server Error"
 func (h *handler) GetCategoryById(c *gin.Context) {
 	// var category models.GetCategoryByIdModel
 	category_id := c.Param("category_id")
@@ -141,11 +144,12 @@ func (h *handler) GetCategoryById(c *gin.Context) {
 // @Tags        category
 // @Accept      json
 // @Produce     json
-// @Param       category_id path     string                                     true "category_id"
-// @Param       category    body     models.UpdateCategoryModel                 true "category"
-// @Success     200         {object} models.ResponseModel{data=models.Category} "desc"
-// @Response    400         {object} models.ResponseModel{error=string}         "Bad Request"
-// @Failure     500         {object} models.ResponseModel{error=string}         "Server Error"
+// @Param       category_id   path     string                                     true  "category_id"
+// @Param       category      body     models.UpdateCategoryModel                 true  "category"
+// @Param       Authorization header   string                                     false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=models.Category} "desc"
+// @Response    400           {object} models.ResponseModel{error=string}         "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}         "Server Error"
 func (h *handler) UpdateCategory(c *gin.Context) {
 	var category models.UpdateCategoryModel
 	// var response models.Category
@@ -190,10 +194,11 @@ func (h *handler) UpdateCategory(c *gin.Context) {
 // @Tags        category
 // @Accept      json
 // @Produce     json
-// @Param       category_id path     string                             true "category_id"
-// @Success     200         {object} models.ResponseModel{data=string}  "desc"
-// @Response    400         {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure     500         {object} models.ResponseModel{error=string} "Server Error"
+// @Param       category_id   path     string                             true  "category_id"
+// @Param       Authorization header   string                             false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=string}  "desc"
+// @Response    400           {object} models.ResponseModel{error=string} "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string} "Server Error"
 func (h *handler) DeleteCategory(c *gin.Context) {
 	category_id := c.Param("category_id")
 

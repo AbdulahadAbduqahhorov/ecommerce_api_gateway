@@ -18,10 +18,11 @@ import (
 // @Tags        order
 // @Accept      json
 // @Produce     json
-// @Param       order body     models.CreateOrderModel            true "order"
-// @Success     200   {object} models.ResponseModel{data=string}  "desc"
-// @Response    400   {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure     500   {object} models.ResponseModel{error=string} "Server Error"
+// @Param       order         body     models.CreateOrderModel            true  "order"
+// @Param       Authorization header   string                             false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=string}  "desc"
+// @Response    400           {object} models.ResponseModel{error=string} "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string} "Server Error"
 // @Router      /order [POST]
 func (h *handler) CreateOrder(c *gin.Context) {
 	var order models.CreateOrderModel
@@ -62,12 +63,13 @@ func (h *handler) CreateOrder(c *gin.Context) {
 // @Tags        order
 // @Accept      json
 // @Produce     json
-// @Param       offset query    string                                             false "offset"
-// @Param       limit  query    string                                             false "limit"
-// @Param       search query    string                                             false "search"
-// @Success     200    {object} models.ResponseModel{data=models.GetAllOrderModel} "desc"
-// @Response    400    {object} models.ResponseModel{error=string}                 "Bad Request"
-// @Failure     500    {object} models.ResponseModel{error=string}                 "Server Error"
+// @Param       offset        query    string                                             false "offset"
+// @Param       limit         query    string                                             false "limit"
+// @Param       search        query    string                                             false "search"
+// @Param       Authorization header   string                                             false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=models.GetAllOrderModel} "desc"
+// @Response    400           {object} models.ResponseModel{error=string}                 "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}                 "Server Error"
 // @Router      /order [GET]
 func (h *handler) GetAllOrder(c *gin.Context) {
 	// var orders models.GetAllOrderModel
@@ -110,10 +112,11 @@ func (h *handler) GetAllOrder(c *gin.Context) {
 // @Tags        order
 // @Accept      json
 // @Produce     json
-// @Param       order_id path     string                                             true "order_id"
-// @Success     200      {object} models.ResponseModel{data=models.GetAllOrderModel} "desc"
-// @Response    400      {object} models.ResponseModel{error=string}                 "Bad Request"
-// @Failure     500      {object} models.ResponseModel{error=string}                 "Server Error"
+// @Param       order_id      path     string                                             true  "order_id"
+// @Param       Authorization header   string                                             false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=models.GetAllOrderModel} "desc"
+// @Response    400           {object} models.ResponseModel{error=string}                 "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}                 "Server Error"
 func (h *handler) GetOrderById(c *gin.Context) {
 	// var order models.GetOrderByIdModel
 	order_id := c.Param("order_id")

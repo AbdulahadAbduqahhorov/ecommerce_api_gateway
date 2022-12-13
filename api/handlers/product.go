@@ -18,10 +18,11 @@ import (
 // @Tags        product
 // @Accept      json
 // @Produce     json
-// @Param       product body     models.CreateProductModel          true "product"
-// @Success     200     {object} models.ResponseModel{data=string}  "desc"
-// @Response    400     {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure     500     {object} models.ResponseModel{error=string} "Server Error"
+// @Param       product       body     models.CreateProductModel          true  "product"
+// @Param       Authorization header   string                             false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=string}  "desc"
+// @Response    400           {object} models.ResponseModel{error=string} "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string} "Server Error"
 // @Router      /product [POST]
 func (h *handler) CreateProduct(c *gin.Context) {
 	var product models.CreateProductModel
@@ -57,14 +58,15 @@ func (h *handler) CreateProduct(c *gin.Context) {
 // @Tags        product
 // @Accept      json
 // @Produce     json
-// @Param       offset      query    string                                               false "offset"
-// @Param       limit       query    string                                               false "limit"
-// @Param       search      query    string                                               false "search"
-// @Param       category_id query    string                                               false "category_id"
-// @Param       enumstring  query    string                                               true  "string enums" Enums(Price Low to High,Price High to Low)
-// @Success     200         {object} models.ResponseModel{data=models.GetAllProductModel} "desc"
-// @Response    400         {object} models.ResponseModel{error=string}                   "Bad Request"
-// @Failure     500         {object} models.ResponseModel{error=string}                   "Server Error"
+// @Param       offset        query    string                                               false "offset"
+// @Param       limit         query    string                                               false "limit"
+// @Param       search        query    string                                               false "search"
+// @Param       category_id   query    string                                               false "category_id"
+// @Param       enumstring    query    string                                               true  "string enums" Enums(Price Low to High,Price High to Low)
+// @Param       Authorization header   string                                               false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=models.GetAllProductModel} "desc"
+// @Response    400           {object} models.ResponseModel{error=string}                   "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}                   "Server Error"
 // @Router      /product [GET]
 func (h *handler) GetAllProduct(c *gin.Context) {
 	// var products models.GetAllProductModel
@@ -109,10 +111,11 @@ func (h *handler) GetAllProduct(c *gin.Context) {
 // @Tags        product
 // @Accept      json
 // @Produce     json
-// @Param       product_id path     string                                               true "product_id"
-// @Success     200        {object} models.ResponseModel{data=models.GetAllProductModel} "desc"
-// @Response    400        {object} models.ResponseModel{error=string}                   "Bad Request"
-// @Failure     500        {object} models.ResponseModel{error=string}                   "Server Error"
+// @Param       product_id    path     string                                               true  "product_id"
+// @Param       Authorization header   string                                               false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=models.GetAllProductModel} "desc"
+// @Response    400           {object} models.ResponseModel{error=string}                   "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}                   "Server Error"
 func (h *handler) GetProductById(c *gin.Context) {
 	// var product models.GetProductByIdModel
 	product_id := c.Param("product_id")
@@ -149,11 +152,12 @@ func (h *handler) GetProductById(c *gin.Context) {
 // @Tags        product
 // @Accept      json
 // @Produce     json
-// @Param       product_id path     string                                    true "product_id"
-// @Param       product    body     models.UpdateProductModel                 true "product"
-// @Success     200        {object} models.ResponseModel{data=models.Product} "desc"
-// @Response    400        {object} models.ResponseModel{error=string}        "Bad Request"
-// @Failure     500        {object} models.ResponseModel{error=string}        "Server Error"
+// @Param       product_id    path     string                                    true  "product_id"
+// @Param       product       body     models.UpdateProductModel                 true  "product"
+// @Param       Authorization header   string                                    false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=models.Product} "desc"
+// @Response    400           {object} models.ResponseModel{error=string}        "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string}        "Server Error"
 func (h *handler) UpdateProduct(c *gin.Context) {
 	var product models.UpdateProductModel
 	// var response models.Product
@@ -200,10 +204,11 @@ func (h *handler) UpdateProduct(c *gin.Context) {
 // @Tags        product
 // @Accept      json
 // @Produce     json
-// @Param       product_id path     string                             true "product_id"
-// @Success     200        {object} models.ResponseModel{data=string}  "desc"
-// @Response    400        {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure     500        {object} models.ResponseModel{error=string} "Server Error"
+// @Param       product_id    path     string                             true  "product_id"
+// @Param       Authorization header   string                             false "Authorization"
+// @Success     200           {object} models.ResponseModel{data=string}  "desc"
+// @Response    400           {object} models.ResponseModel{error=string} "Bad Request"
+// @Failure     500           {object} models.ResponseModel{error=string} "Server Error"
 func (h *handler) DeleteProduct(c *gin.Context) {
 	product_id := c.Param("product_id")
 
