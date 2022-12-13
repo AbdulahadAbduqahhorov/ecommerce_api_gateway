@@ -45,13 +45,13 @@ func New(opt *RouterOptions) *gin.Engine {
 	router.DELETE("/product/:product_id", handler.AuthMiddleware(map[string]bool{"ADMIN":true,"SUPERADMIN":true}),handler.DeleteProduct)
 
 	//**Category
-	category := router.Group("/category")
+	category := router.Group("/category",handler.AuthMiddleware(map[string]bool{"ADMIN":true,"SUPERADMIN":true}))
 	{
-		category.POST("",handler.AuthMiddleware(map[string]bool{"ADMIN":true,"SUPERADMIN":true}), handler.CreateCategory)
-		category.GET("",handler.AuthMiddleware(map[string]bool{"ADMIN":true,"SUPERADMIN":true}), handler.GetAllCategory)
-		category.GET("/:category_id", handler.AuthMiddleware(map[string]bool{"ADMIN":true,"SUPERADMIN":true}),handler.GetCategoryById)
-		category.PUT("/:category_id", handler.AuthMiddleware(map[string]bool{"ADMIN":true,"SUPERADMIN":true}),handler.UpdateCategory)
-		category.DELETE("/:category_id", handler.AuthMiddleware(map[string]bool{"ADMIN":true,"SUPERADMIN":true}),handler.DeleteCategory)
+		category.POST("", handler.CreateCategory)
+		category.GET("", handler.GetAllCategory)
+		category.GET("/:category_id",handler.GetCategoryById)
+		category.PUT("/:category_id",handler.UpdateCategory)
+		category.DELETE("/:category_id",handler.DeleteCategory)
 	}
 
 	//**Order

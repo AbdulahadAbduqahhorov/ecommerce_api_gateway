@@ -26,7 +26,16 @@ import (
 // @Router      /order [POST]
 func (h *handler) CreateOrder(c *gin.Context) {
 	var order models.CreateOrderModel
-
+	userIdRaw, ok := c.Get("auth_user_id")
+	if !ok {
+		c.JSON(http.StatusUnauthorized, "Something is worng")
+		return
+	}
+	userId, ok := userIdRaw.(string)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, "Something is worng")
+		return
+	}
 	err := c.BindJSON(&order)
 	if err != nil {
 		h.handleErrorResponse(c, http.StatusBadRequest, "error while binding json", err)
@@ -42,6 +51,7 @@ func (h *handler) CreateOrder(c *gin.Context) {
 	resp, err := h.services.OrderService().CreateOrder(
 		context.Background(),
 		&order_service.CreateOrderRequest{
+			UserId:          userId,
 			CustomerName:    order.CustomerName,
 			CustomerAddress: order.CustomerAddress,
 			CustomerPhone:   order.CustomerPhone,
@@ -72,7 +82,30 @@ func (h *handler) CreateOrder(c *gin.Context) {
 // @Failure     500           {object} models.ResponseModel{error=string}                 "Server Error"
 // @Router      /order [GET]
 func (h *handler) GetAllOrder(c *gin.Context) {
-	// var orders models.GetAllOrderModel
+	userTypeRaw, ok := c.Get("auth_user_type")
+	if !ok {
+		c.JSON(http.StatusUnauthorized, "Something is worng")
+		return
+	}
+	userType, ok := userTypeRaw.(string)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, "Something is worng")
+		return
+	}
+	var userId string
+	if userType == "USER" {
+		userIdRaw, ok := c.Get("auth_user_id")
+		if !ok {
+			c.JSON(http.StatusUnauthorized, "Something is worng")
+			return
+		}
+		userId, ok = userIdRaw.(string)
+		if !ok {
+			c.JSON(http.StatusUnauthorized, "Something is worng")
+			return
+		}
+	}
+
 	offset, err := h.ParseQueryParam(c, "offset", h.cfg.DefaultOffset)
 	if err != nil {
 		return
@@ -89,18 +122,13 @@ func (h *handler) GetAllOrder(c *gin.Context) {
 			Offset: int32(offset),
 			Limit:  int32(limit),
 			Search: c.Query("search"),
+			UserId: userId,
 		},
 	)
 
-	if !handleError(h.log, c, err, "error while getting all categories") {
+	if !handleError(h.log, c, err, "error while getting all orders") {
 		return
 	}
-	// err = ParseToStruct(&orders, resp)
-
-	// if !handleError(h.log, c, err, "error while parse to struct") {
-	// 	return
-	// }
-
 	h.handleSuccessResponse(c, http.StatusOK, "ok", resp)
 }
 
@@ -118,29 +146,47 @@ func (h *handler) GetAllOrder(c *gin.Context) {
 // @Response    400           {object} models.ResponseModel{error=string}                 "Bad Request"
 // @Failure     500           {object} models.ResponseModel{error=string}                 "Server Error"
 func (h *handler) GetOrderById(c *gin.Context) {
-	// var order models.GetOrderByIdModel
 	order_id := c.Param("order_id")
 
 	if !util.IsValidUUID(order_id) {
 		h.handleErrorResponse(c, http.StatusBadRequest, "invalid order id", errors.New("order id is not valid"))
 		return
 	}
+	userTypeRaw, ok := c.Get("auth_user_type")
+	if !ok {
+		c.JSON(http.StatusUnauthorized, "Something is worng")
+		return
+	}
+	userType, ok := userTypeRaw.(string)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, "Something is worng")
+		return
+	}
+	var userId string
+	if userType == "USER" {
+		userIdRaw, ok := c.Get("auth_user_id")
+		if !ok {
+			c.JSON(http.StatusUnauthorized, "Something is worng")
+			return
+		}
+		userId, ok = userIdRaw.(string)
+		if !ok {
+			c.JSON(http.StatusUnauthorized, "Something is worng")
+			return
+		}
+	}
 
 	resp, err := h.services.OrderService().GetOrderById(
 		context.Background(),
 		&order_service.GetOrderByIdRequest{
 			Id: order_id,
+			UserId: userId,
 		},
 	)
 
 	if !handleError(h.log, c, err, "error while getting order") {
 		return
 	}
-
-	// err = ParseToStruct(&order, resp)
-	// if !handleError(h.log, c, err, "error while parsing to struct") {
-	// 	return
-	// }
 
 	h.handleSuccessResponse(c, http.StatusOK, "ok", resp)
 }
