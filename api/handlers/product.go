@@ -12,17 +12,17 @@ import (
 )
 
 // Create Product godoc
-// @ID create_product
-// @Summary Create Product
+// @ID          create_product
+// @Summary     Create Product
 // @Description Create Product
-// @Tags product
-// @Accept json
-// @Produce json
-// @Param product body models.CreateProductModel true "product"
-// @Success 200 {object} models.ResponseModel{data=string} "desc"
-// @Response 400 {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure 500 {object} models.ResponseModel{error=string} "Server Error"
-// @Router /product [POST]
+// @Tags        product
+// @Accept      json
+// @Produce     json
+// @Param       product body     models.CreateProductModel          true "product"
+// @Success     200     {object} models.ResponseModel{data=string}  "desc"
+// @Response    400     {object} models.ResponseModel{error=string} "Bad Request"
+// @Failure     500     {object} models.ResponseModel{error=string} "Server Error"
+// @Router      /product [POST]
 func (h *handler) CreateProduct(c *gin.Context) {
 	var product models.CreateProductModel
 
@@ -51,21 +51,21 @@ func (h *handler) CreateProduct(c *gin.Context) {
 }
 
 // Get All Product godoc
-// @ID get all product
-// @Summary Get All Product
+// @ID          get all product
+// @Summary     Get All Product
 // @Description Get All Product
-// @Tags product
-// @Accept json
-// @Produce json
-// @Param offset query string false "offset"
-// @Param limit query string false "limit"
-// @Param search query string false "search"
-// @Param category_id query string false "category_id"
-// @Param   enumstring  query     string     true  "string enums"       Enums(Price Low to High,Price High to Low)
-// @Success 200 {object} models.ResponseModel{data=models.GetAllProductModel} "desc"
-// @Response 400 {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure 500 {object} models.ResponseModel{error=string} "Server Error"
-// @Router /product [GET]
+// @Tags        product
+// @Accept      json
+// @Produce     json
+// @Param       offset      query    string                                               false "offset"
+// @Param       limit       query    string                                               false "limit"
+// @Param       search      query    string                                               false "search"
+// @Param       category_id query    string                                               false "category_id"
+// @Param       enumstring  query    string                                               true  "string enums" Enums(Price Low to High,Price High to Low)
+// @Success     200         {object} models.ResponseModel{data=models.GetAllProductModel} "desc"
+// @Response    400         {object} models.ResponseModel{error=string}                   "Bad Request"
+// @Failure     500         {object} models.ResponseModel{error=string}                   "Server Error"
+// @Router      /product [GET]
 func (h *handler) GetAllProduct(c *gin.Context) {
 	// var products models.GetAllProductModel
 
@@ -102,17 +102,17 @@ func (h *handler) GetAllProduct(c *gin.Context) {
 }
 
 // GetProductById godoc
-// @ID get_product
-// @Router /product/{product_id} [GET]
-// @Summary Get Product
+// @ID          get_product
+// @Router      /product/{product_id} [GET]
+// @Summary     Get Product
 // @Description Get Product
-// @Tags product
-// @Accept json
-// @Produce json
-// @Param product_id path string true "product_id"
-// @Success 200 {object} models.ResponseModel{data=models.GetAllProductModel} "desc"
-// @Response 400 {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure 500 {object} models.ResponseModel{error=string} "Server Error"
+// @Tags        product
+// @Accept      json
+// @Produce     json
+// @Param       product_id path     string                                               true "product_id"
+// @Success     200        {object} models.ResponseModel{data=models.GetAllProductModel} "desc"
+// @Response    400        {object} models.ResponseModel{error=string}                   "Bad Request"
+// @Failure     500        {object} models.ResponseModel{error=string}                   "Server Error"
 func (h *handler) GetProductById(c *gin.Context) {
 	// var product models.GetProductByIdModel
 	product_id := c.Param("product_id")
@@ -142,18 +142,18 @@ func (h *handler) GetProductById(c *gin.Context) {
 }
 
 // Update Product godoc
-// @ID update_product
-// @Router /product/{product_id} [PUT]
-// @Summary Update Product
+// @ID          update_product
+// @Router      /product/{product_id} [PUT]
+// @Summary     Update Product
 // @Description Update Product by ID
-// @Tags product
-// @Accept json
-// @Produce json
-// @Param product_id path string true "product_id"
-// @Param product body models.UpdateProductModel true "product"
-// @Success 200 {object} models.ResponseModel{data=models.Product} "desc"
-// @Response 400 {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure 500 {object} models.ResponseModel{error=string} "Server Error"
+// @Tags        product
+// @Accept      json
+// @Produce     json
+// @Param       product_id path     string                                    true "product_id"
+// @Param       product    body     models.UpdateProductModel                 true "product"
+// @Success     200        {object} models.ResponseModel{data=models.Product} "desc"
+// @Response    400        {object} models.ResponseModel{error=string}        "Bad Request"
+// @Failure     500        {object} models.ResponseModel{error=string}        "Server Error"
 func (h *handler) UpdateProduct(c *gin.Context) {
 	var product models.UpdateProductModel
 	// var response models.Product
@@ -193,17 +193,17 @@ func (h *handler) UpdateProduct(c *gin.Context) {
 }
 
 // Delete Product godoc
-// @ID delete_product
-// @Router /product/{product_id} [DELETE]
-// @Summary Delete Product
+// @ID          delete_product
+// @Router      /product/{product_id} [DELETE]
+// @Summary     Delete Product
 // @Description Delete Product by given ID
-// @Tags product
-// @Accept json
-// @Produce json
-// @Param product_id path string true "product_id"
-// @Success 200 {object} models.ResponseModel{data=string} "desc"
-// @Response 400 {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure 500 {object} models.ResponseModel{error=string} "Server Error"
+// @Tags        product
+// @Accept      json
+// @Produce     json
+// @Param       product_id path     string                             true "product_id"
+// @Success     200        {object} models.ResponseModel{data=string}  "desc"
+// @Response    400        {object} models.ResponseModel{error=string} "Bad Request"
+// @Failure     500        {object} models.ResponseModel{error=string} "Server Error"
 func (h *handler) DeleteProduct(c *gin.Context) {
 	product_id := c.Param("product_id")
 

@@ -12,17 +12,17 @@ import (
 )
 
 // Create Order godoc
-// @ID create_order
-// @Summary Create Order
+// @ID          create_order
+// @Summary     Create Order
 // @Description Create Order
-// @Tags order
-// @Accept json
-// @Produce json
-// @Param order body models.CreateOrderModel true "order"
-// @Success 200 {object} models.ResponseModel{data=string} "desc"
-// @Response 400 {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure 500 {object} models.ResponseModel{error=string} "Server Error"
-// @Router /order [POST]
+// @Tags        order
+// @Accept      json
+// @Produce     json
+// @Param       order body     models.CreateOrderModel            true "order"
+// @Success     200   {object} models.ResponseModel{data=string}  "desc"
+// @Response    400   {object} models.ResponseModel{error=string} "Bad Request"
+// @Failure     500   {object} models.ResponseModel{error=string} "Server Error"
+// @Router      /order [POST]
 func (h *handler) CreateOrder(c *gin.Context) {
 	var order models.CreateOrderModel
 
@@ -56,19 +56,19 @@ func (h *handler) CreateOrder(c *gin.Context) {
 }
 
 // Get All Order godoc
-// @ID get all order
-// @Summary Get All Order
+// @ID          get all order
+// @Summary     Get All Order
 // @Description Get All Order
-// @Tags order
-// @Accept json
-// @Produce json
-// @Param offset query string false "offset"
-// @Param limit query string false "limit"
-// @Param search query string false "search"
-// @Success 200 {object} models.ResponseModel{data=models.GetAllOrderModel} "desc"
-// @Response 400 {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure 500 {object} models.ResponseModel{error=string} "Server Error"
-// @Router /order [GET]
+// @Tags        order
+// @Accept      json
+// @Produce     json
+// @Param       offset query    string                                             false "offset"
+// @Param       limit  query    string                                             false "limit"
+// @Param       search query    string                                             false "search"
+// @Success     200    {object} models.ResponseModel{data=models.GetAllOrderModel} "desc"
+// @Response    400    {object} models.ResponseModel{error=string}                 "Bad Request"
+// @Failure     500    {object} models.ResponseModel{error=string}                 "Server Error"
+// @Router      /order [GET]
 func (h *handler) GetAllOrder(c *gin.Context) {
 	// var orders models.GetAllOrderModel
 	offset, err := h.ParseQueryParam(c, "offset", h.cfg.DefaultOffset)
@@ -103,17 +103,17 @@ func (h *handler) GetAllOrder(c *gin.Context) {
 }
 
 // GetOrderById godoc
-// @ID get_order
-// @Router /order/{order_id} [GET]
-// @Summary Get Order
+// @ID          get_order
+// @Router      /order/{order_id} [GET]
+// @Summary     Get Order
 // @Description Get Order
-// @Tags order
-// @Accept json
-// @Produce json
-// @Param order_id path string true "order_id"
-// @Success 200 {object} models.ResponseModel{data=models.GetAllOrderModel} "desc"
-// @Response 400 {object} models.ResponseModel{error=string} "Bad Request"
-// @Failure 500 {object} models.ResponseModel{error=string} "Server Error"
+// @Tags        order
+// @Accept      json
+// @Produce     json
+// @Param       order_id path     string                                             true "order_id"
+// @Success     200      {object} models.ResponseModel{data=models.GetAllOrderModel} "desc"
+// @Response    400      {object} models.ResponseModel{error=string}                 "Bad Request"
+// @Failure     500      {object} models.ResponseModel{error=string}                 "Server Error"
 func (h *handler) GetOrderById(c *gin.Context) {
 	// var order models.GetOrderByIdModel
 	order_id := c.Param("order_id")
